@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\PostCreated;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -8,10 +9,12 @@ use Illuminate\Support\Str;
 Route::get('/create-post', function () {
     $user = User::first();
 
-    $user->posts()->create([
+    $post = $user->posts()->create([
         'title' => Str::random(150),
         'body' => Str::random(150),
     ]);
+
+    // event(new PostCreated($post));
 
     return 'ok';
 });
